@@ -10,7 +10,7 @@ Gun::Gun(int ammo, string name, float fireRate, bool isAutomatic): ammo(ammo), n
     numberOfGuns++;
 }
 
-Gun& Gun::operator+(const Gun& g){
+const Gun& Gun::operator+(const Gun& g){
     Gun result;
     ammo += g.ammo;
     name += g.name;
@@ -19,7 +19,7 @@ Gun& Gun::operator+(const Gun& g){
     return *this;
 }
 
-Gun& Gun::operator+=(const Gun& g) {
+const Gun& Gun::operator+=(const Gun& g) {
     *this = *this + g;
     return *this;
 }
@@ -32,7 +32,7 @@ bool Gun::operator!=(const Gun& g) const {
     return !(*this == g);
 }
 
-Gun& Gun::operator=(const Gun& g) {
+const Gun& Gun::operator=(const Gun& g) {
 
     ammo = g.ammo;
     name = g.name;
@@ -42,39 +42,37 @@ Gun& Gun::operator=(const Gun& g) {
     return *this;
 }
 
-Gun Gun::operator--(int) {
-    Gun temp = *this;
-    ammo--;
-    return temp;
-}
-
-Gun& Gun::operator--() {
+const Gun& Gun::operator--(int) {
     ammo--;
     return *this;
 }
 
-Gun Gun::operator++(int) {
-    Gun temp = *this;
-    ammo++;
-    return temp;
+const Gun& Gun::operator--() {
+    ammo--;
+    return *this;
 }
 
-Gun& Gun::operator++() {
+const Gun& Gun::operator++(int) {
     ammo++;
     return *this;
 }
 
-Gun& Gun::operator[](int newAmmo) {
+const Gun& Gun::operator++() {
+    ammo++;
+    return *this;
+}
+
+const Gun& Gun::operator[](int newAmmo) {
     ammo = newAmmo;
     return *this;
 }
 
-Gun& Gun::operator*(int coef) {
+const Gun& Gun::operator*(int coef) {
     ammo *= coef;
     return *this;
 }
 
-Gun& Gun::operator/(int coef) {
+const Gun& Gun::operator/(int coef) {
     if (coef == 0) {
         throw runtime_error("division by zero");
     }
@@ -82,12 +80,12 @@ Gun& Gun::operator/(int coef) {
     return *this;
 }
 
-Gun& Gun::operator*=(int coef) {
+const Gun& Gun::operator*=(int coef) {
     ammo *= coef;
     return *this;
 }
 
-Gun& Gun::operator/=(int coef) {
+const Gun& Gun::operator/=(int coef) {
     if (coef == 0) {
         throw runtime_error("division by zero");
     }

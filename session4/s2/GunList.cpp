@@ -6,10 +6,21 @@ Node::Node(const Gun & g): gun(g), next(nullptr), previous(nullptr), isRemoved(f
 }
 
 Node::~Node(){
+
 }
 
-GunList::GunList() : head(nullptr), trashHead(nullptr) {}
-GunList::~GunList() {}
+GunList::GunList() : head(nullptr){}
+GunList::~GunList() {
+    if(head == nullptr){
+        return;
+    }
+    Node* current = head;
+    do {
+        Node* temp = current->next;
+        delete current;
+        current = temp;
+    } while (current != head);
+}
 
 void GunList::addGun(const Gun &g) {
     Node* newNode = new Node(g);
@@ -29,54 +40,12 @@ void GunList::addGun(const Gun &g) {
 }
 
 
-void GunList::addTrash(const Gun &g) {
-    Node* newNode = new Node(g);
-    if(trashHead == nullptr){
-        trashHead = newNode;
-        trashHead->previous = trashHead;
-        trashHead->next = trashHead;
-    }
-    else{
-        trashHead->previous->next = trashHead;
-        newNode->previous = trashHead->previous;
-        newNode->next = trashHead;
-        trashHead->previous = newNode;
-    }
-}
-
-
-bool GunList::removeTrash(string Name) {
-    Node* current = trashHead;
-    if(current->next == current){
-        delete trashHead;
-        trashHead = nullptr;
-        return true;
-    }
-
-    do{
-        if(current->gun.getName() == Name){
-            current->isRemoved = true;
-            current->previous->next = current->next;
-            current->next->previous = current->previous;
-            delete current;
-            current = nullptr;
-            return true;
-        }
-        current = current->next;
-    } while (current != trashHead);
-    cout<<"gun not found in trash can"<<endl;
-    return false;
-}
-
 bool GunList::disableGun(string Name) {
     Node* current = head;
 
     do{
         if(current->gun.getName() == Name){
             current->isRemoved = true;
-            current->next->previous = current->previous;
-            current->previous->next = current->next;
-            addTrash(current->gun);
             return true;
             numberOfGuns --;
         }
@@ -88,18 +57,16 @@ bool GunList::disableGun(string Name) {
 }
 
 bool GunList::recoverGun(string Name) {
-    Node* currentTrash = trashHead;
+    Node* current = head;
 
     do{
-        if(currentTrash->gun.getName() == Name){
-            currentTrash->isRemoved = false;
-            currentTrash->next->previous = currentTrash->previous;
-            currentTrash->previous->next = currentTrash->next;
-            addGun(currentTrash->gun);
+        if(current->gun.getName() == Name){
+            current->isRemoved = false;
+            numberOfGuns++;
             return true;
         }
-        currentTrash = currentTrash->next;
-    } while (currentTrash != trashHead);
+        current = current->next;
+    } while (current != head);
 
     cout<<"gun not found or wasn't disabled"<<endl;
     return false;
@@ -126,6 +93,7 @@ bool GunList::completeRemoveGun(string Name) {
         }
         current = current->next;
     } while (current != head);
+
     cout<<"gun not found"<<endl;
     return false;
 }
@@ -136,8 +104,6 @@ Gun* GunList::find(string Name) const {
         if(current->gun.getName() == Name){return &current->gun;}
         current = current->next;
     } while (current != head);
-
-    cout<<"gun not found"<<endl;
     return nullptr;
 }
 
@@ -203,12 +169,12 @@ void GunList::more() {
                 Gun* gun2 = find(gunName2);
                 if (gun1 && gun2) {
                     if (*gun1 == *gun2) {
-                        cout << "the two guns are equal.">>endl;
+                        cout << "the two guns are equal"<<endl;
                     } else {
-                        cout << "the two guns are not equal.">>endl;
+                        cout << "the two guns are not equal"<<endl;
                     }
                 } else {
-                    cout << "one or both guns not found.\n";
+                    cout << "one or both guns not found"<<endl;
                 }
                 break;
             }
@@ -217,10 +183,10 @@ void GunList::more() {
                 int coef;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the coefficient: ";
-                cin >>coef;
                 Gun* gun = find(Name);
                 if (gun) {
+                    cout<<endl<<"enter the coefficient: ";
+                    cin >>coef;
                     *gun *= coef;
                     cout<<"updated gun"<<*gun;
                 } else {
@@ -233,15 +199,16 @@ void GunList::more() {
                 int coef;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the coefficient: "
-                cin >>coef;
+
                 try {
                     Gun* gun = find(Name);
                     if (gun != nullptr) {
+                        cout<<endl<<"enter the coefficient: ";
+                        cin >>coef;
                         *gun /= coef;
                         cout<<"updated gun"<<*gun;
                     } else {
-                        cout << "Gun not found.\n";
+                        cout << "gun not found"<<endl;
                     }
                 } catch (const runtime_error& e) {
                     cout << e.what() << endl;
@@ -253,10 +220,10 @@ void GunList::more() {
                 int ammoNum;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the number: ";
-                cin >>ammoNum;
                 Gun* gun = find(Name);
                 if(gun != nullptr){
+                    cout<<endl<<"enter the number: ";
+                    cin >>ammoNum;
                     bool compared = *gun < ammoNum;
                     cout<<"is the gun's ammo smaller than your number: "<<boolalpha<<compared <<endl;}
                 else{cout<<"gun not found"<<endl;}
@@ -268,10 +235,11 @@ void GunList::more() {
                 int ammoNum;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the number: ";
-                cin >>ammoNum;
+
                 Gun* gun = find(Name);
                 if(gun != nullptr){
+                    cout<<endl<<"enter the number: ";
+                    cin >>ammoNum;
                     bool compared = *gun> ammoNum;
                     cout<<"is the gun's ammo grater than your number: "<<boolalpha<< compared <<endl;
                 }
@@ -283,11 +251,11 @@ void GunList::more() {
                 int ammoNum;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the number: ";
-                cin >>ammoNum;
                 Gun* gun = find(Name);
 
                 if(gun != nullptr){
+                    cout<<endl<<"enter the number: ";
+                    cin >>ammoNum;
                     bool compared = *gun <= ammoNum;
                     cout<<"is the gun's ammo <= your number: "<<compared <<endl;
                 }
@@ -300,10 +268,10 @@ void GunList::more() {
                 int ammoNum;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the number: ";
-                cin >>ammoNum;
                 Gun* gun = find(Name);
                 if(gun != nullptr){
+                    cout<<endl<<"enter the number: ";
+                    cin >>ammoNum;
                     bool compared = *gun >= ammoNum;
                     cout<<"is the gun's ammo >= your number: "<<boolalpha<<compared <<endl;
                 }
@@ -316,10 +284,10 @@ void GunList::more() {
                 int numBits;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the number of bits: ";
-                cin >>numBits;
                 Gun* gun = find(Name);
                 if(gun != nullptr){
+                    cout<<endl<<"enter the number of bits: ";
+                    cin >>numBits;
                     *gun >> numBits;
                     cout<<"updated gun: "<<endl<<*gun;
                 }
@@ -332,10 +300,10 @@ void GunList::more() {
                 int numBits;
                 cout << "enter the gun's name: ";
                 cin >> Name;
-                cout<<endl<<"enter the number of bits: ";
-                cin >>numBits;
                 Gun* gun = find(Name);
                 if(gun != nullptr){
+                    cout<<endl<<"enter the number of bits: ";
+                    cin >>numBits;
                     *gun << numBits;
                     cout<<"updated gun: "<<endl<<*gun;
                 }
@@ -361,3 +329,4 @@ void GunList::printGunList() {
         current = current->next;
     } while (current != head);
 }
+

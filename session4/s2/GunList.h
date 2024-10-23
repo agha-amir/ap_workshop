@@ -16,15 +16,12 @@ public:
 class GunList{
 private:
     Node * head;
-    Node * trashHead;
     static int numberOfGuns;
 public:
     GunList();
     ~GunList();
 
     void addGun(const Gun&);
-    void addTrash(const Gun&);
-    bool removeTrash(string);
     bool disableGun(string);
     bool recoverGun(string);
     bool completeRemoveGun(string);
@@ -33,6 +30,7 @@ public:
     static int gunCount();
 
     void printGunList();
+
 
 };
 

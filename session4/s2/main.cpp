@@ -10,7 +10,7 @@ void menu(GunList* gunList) {
         cout << "3.recover a disabled gun"<<endl;
         cout << "4.completely remove a gun"<<endl;
         cout << "5.more(==, ++, --, /=, *=)"<<endl;
-        cout << "6.print the list"<<endl;
+        cout << "6.print the guns list"<<endl;
         cout << "press 0 to exit"<<endl;
         cin >> choice;
 
