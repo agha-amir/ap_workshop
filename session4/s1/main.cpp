@@ -44,7 +44,9 @@ int main(){
     cout<<g3<<endl;
 
     cin>>g4;
+    g4/=0;
     cout<<g4<<endl;
+
 
     return 0;
 }

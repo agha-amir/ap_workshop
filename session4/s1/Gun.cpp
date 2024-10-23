@@ -73,11 +73,16 @@ const Gun& Gun::operator*(int coef) {
 }
 
 const Gun& Gun::operator/(int coef) {
-    if (coef == 0) {
-        throw runtime_error("division by zero");
+    try{
+        if (coef == 0) {
+            throw runtime_error("division by zero");
+        }
+        ammo /= coef;
+        return *this;
+    }catch(const exception& e){
+        cout<<e.what()<<endl;
+        return *this;
     }
-    ammo /= coef;
-    return *this;
 }
 
 const Gun& Gun::operator*=(int coef) {
@@ -86,11 +91,16 @@ const Gun& Gun::operator*=(int coef) {
 }
 
 const Gun& Gun::operator/=(int coef) {
-    if (coef == 0) {
-        throw runtime_error("division by zero");
+    try{
+        if (coef == 0) {
+            throw runtime_error("division by zero");
+        }
+        ammo /= coef;
+        return *this;
+    }catch(const exception& e){
+        cout<<e.what()<<endl;
+        return *this;
     }
-    ammo /= coef;
-    return *this;
 }
 
 istream& operator>>(istream& in, Gun& g) {
