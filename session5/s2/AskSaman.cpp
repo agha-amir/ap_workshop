@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <stdexcept>
+#include <gtest/gtest.h>
 using namespace std;
 
 pair<string, int>askSaman(const string& brand,const string& price){
@@ -20,9 +21,30 @@ pair<string, int> askSaman(const string& brand, const string& price, Args...args
     }
 }
 
-int main(){
+TEST(single_var, _sv1){
+    pair<string, int> res = askSaman("Asus", "1200");
+    EXPECT_EQ(res.first, "Asus");
+}
+TEST(single_var, _sv2){
+    pair<string, int> res = askSaman("Lenevo", "5200");
+    EXPECT_EQ(res.first, "Lenevo");
+}
+
+
+TEST(multi_var, _mv1){
     pair<string, int> res = askSaman("Asus", "1200", "Lenevo", "5200", "MacBook", "4500");
-    cout<<"the most expensive brand: "<<res.first<<endl<<"the brand's price: "<<res.second<<endl;
-    return 0;
+    EXPECT_EQ(res.first, "Lenevo");
+}
+
+TEST(multi_var, _mv2){
+    pair<string, int> res = askSaman("Asus", "1200", "Lenevo", "5200", "MacBook", "4500", "HP", "5500");
+    EXPECT_EQ(res.first, "HP");
+}
+
+
+
+int main(int argc, char* argv[]) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
 
