@@ -1,7 +1,7 @@
 #include "Vector.cpp"
-
+using namespace amir;
 int main() {
-    Vector<int> vec(4, 19);
+    amir::Vector<int> vec(4, 19);
     vec.push_back(20);
     vec.push_back(21);
 

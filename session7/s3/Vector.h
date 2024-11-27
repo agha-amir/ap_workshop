@@ -6,13 +6,14 @@
 #include "Weapon.h"
 using namespace std;
 
-template <typename T>
-class Vector{
-private:
+namespace amir{
+    template <typename T>
+    class Vector{
+    private:
         T* arrayOfElements;
         int size;
         int capacity;
-public:
+    public:
         Vector();
         Vector(int count);
         Vector(int count, const T& value);
@@ -53,12 +54,13 @@ public:
         void printAllW();
         Vector<T>& sortWeapons();
 
-};
+    };
 
-class concatenate_error : public invalid_argument {
-public:
-    concatenate_error(const string& message):invalid_argument(message){};
-};
+    class concatenate_error : public invalid_argument {
+    public:
+        concatenate_error(const string& message):invalid_argument(message){};
+    };
+}
 
 
 

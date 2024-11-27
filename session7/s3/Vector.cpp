@@ -1,4 +1,5 @@
 #include "Vector.h"
+using namespace amir;
 
 template <typename T>
 Vector<T>::Vector() : size(0), capacity(1) {
@@ -35,6 +36,9 @@ o.capacity = 0;
 
 template <typename T>
 Vector<T>::~Vector() {
+    for (int i = 0; i < size; ++i) {
+        delete arrayOfElements[i];
+    }
     delete[] arrayOfElements;
 }
 
@@ -95,9 +99,9 @@ void Vector<T>::resize(int count) {
     if(count < size){size = count;}
     else{
         reserve(count);
-        for (int i = size; i < count; ++i) {
-            arrayOfElements[i] = T();
-        }
+//        for (int i = size; i < count; ++i) {
+//            arrayOfElements[i] = T();
+//        }
         size = count;
     }
 }

@@ -1,5 +1,5 @@
 #include "Vector.h"
-
+using namespace amir;
 template <typename T>
 Vector<T>::Vector() : size(0), capacity(1) {
     arrayOfElements = new T[capacity];
@@ -27,7 +27,7 @@ Vector<T>::Vector(const Vector& o) : size(o.size), capacity(o.capacity) {
 }
 
 template <typename T>
-Vector<T>::Vector(Vector&& o) noexcept : arrayOfElements(o.arrayOfElements), size(o.size), capacity(o.capacity) {
+Vector<T>::Vector(Vector&& o) : arrayOfElements(o.arrayOfElements), size(o.size), capacity(o.capacity) {
 o.arrayOfElements = nullptr;
 o.size = 0;
 o.capacity = 0;
@@ -44,9 +44,9 @@ T &Vector<T>::operator[](int pos) {
 }
 
 template <typename T>
-T &Vector<T>::at(int pos) {
-    if(pos >= this->size){throw out_of_range("out of range");}
-    return this->arrayOfElements[pos];
+T Vector<T>::at(int pos) {
+    if(pos >= size){throw out_of_range("out of range");}
+    return arrayOfElements[pos];
 }
 
 template <typename T>
@@ -107,7 +107,9 @@ void Vector<T>::push_back(const T &value){
     if(capacity == size){
         reserve(capacity * 2);
     }
-    this->arrayOfElements[size+1] = value;
+    this->arrayOfElements[size] = move(value);
+    size++;
+
 }
 
 template <typename T>
@@ -115,7 +117,10 @@ void Vector<T>::push_back(T &&value) {
     if (size == capacity) {
         reserve(capacity * 2);
     }
-    arrayOfElements[size+1] = move(value);
+    arrayOfElements[size] = value;
+    size++;
+
+
 }
 
 template <typename T>

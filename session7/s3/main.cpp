@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Vector.cpp"
-
+using namespace amir;
 using namespace std;
 
 int main() {
-    Vector<Weapon*> weapons;
+    amir::Vector<Weapon*> weapons;
 
     weapons.push_back(new Blade(10, true, false, "Sword of Destiny", 250, 2));
     weapons.push_back(new Bow(5, "Wind Bow", 150, 1));
@@ -12,50 +12,44 @@ int main() {
     weapons.push_back(new Blade(7, false, true, "Ancient Blade", 400, 3));
 
     for (int i = 0; i < weapons.Size(); ++i) {
-        cout << "Weapon at index " << i << ":" << endl;
+        cout << "index " << i <<":"<<endl;
         weapons.printWeaponType(i);
-        cout << "Power: " << weapons.getWPower(i) << endl;
-        cout << "Resilience: " << weapons.getWResilience(i) << endl;
-        cout << "ID: " << weapons.getWId(i) << endl;
-        cout << "--------------------------" << endl;
+        cout << "power: " << weapons.getWPower(i)<<endl;
+        cout << "resilience: " << weapons.getWResilience(i)<<endl;
+        cout << "id: " << weapons.getWId(i)<<endl;
+        cout << "---------------------" << endl<<endl;
     }
 
-    cout << "Total Power of all weapons: " << weapons.getWTotalPower() << endl;
+    cout << "total power of all weapons: " << weapons.getWTotalPower() << endl;
 
     weapons.sortWeapons();
 
-    cout << "Weapons after sorting by power:" << endl;
+    cout << "weapons after sorting by power:" << endl;
     for (int i = 0; i < weapons.Size(); ++i) {
-        cout << "Weapon at index " << i << ":" << endl;
+        cout << "index " << i << ":" << endl;
         weapons.printWeaponType(i);
-        cout << "Power: " << weapons.getWPower(i) << endl;
-        cout << "Resilience: " << weapons.getWResilience(i) << endl;
-        cout << "ID: " << weapons.getWId(i) << endl;
-        cout << "--------------------------" << endl;
+        cout << "power: " << weapons.getWPower(i) << endl;
+        cout << "resilience: " << weapons.getWResilience(i) << endl;
+        cout << "id: " << weapons.getWId(i) << endl;
+        cout << "---------------------" << endl;
     }
 
     cout << "Popping back the last weapon..." << endl;
     weapons.pop_back();
 
-    cout << "Weapons after popping back:" << endl;
+    cout << "weapons after popping back:" << endl;
     for (int i = 0; i < weapons.Size(); ++i) {
-        cout << "Weapon at index " << i << ":" << endl;
+        cout << "index " << i << ":" << endl;
         weapons.printWeaponType(i);
-        cout << "Power: " << weapons.getWPower(i) << endl;
-        cout << "Resilience: " << weapons.getWResilience(i) << endl;
-        cout << "ID: " << weapons.getWId(i) << endl;
-        cout << "--------------------------" << endl;
+        cout << "power: "<<weapons.getWPower(i) << endl;
+        cout << "resilience: "<<weapons.getWResilience(i)<<endl;
+        cout<<"id: "<<weapons.getWId(i)<<endl;
+        cout<<"---------------------"<<endl<<endl;
     }
 
-    // پاک کردن تمام سلاح‌ها
     weapons.clear();
-    cout << "After clearing the vector:" << endl;
-    cout << "Size: " << weapons.Size() << endl;
-
-    // حذف سلاح‌ها (در واقع باید داینامیک‌های مربوط به سلاح‌ها را آزاد کنیم)
-    for (int i = 0; i < weapons.Size(); ++i) {
-        delete weapons[i];
-    }
+    cout<<"after clearing the vector:"<<endl;
+    cout<<"size: "<<weapons.Size()<< endl;
 
     return 0;
 }

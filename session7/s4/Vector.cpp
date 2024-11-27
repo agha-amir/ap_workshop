@@ -1,4 +1,5 @@
 #include "Vector.h"
+using namespace amir;
 
 template <typename T>
 Vector<T>::Vector() : size(0), capacity(1) {

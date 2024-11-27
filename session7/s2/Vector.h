@@ -3,15 +3,16 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
+namespace amir{
+    using namespace std;
 
-template <typename T>
-class Vector{
-private:
+    template <typename T>
+    class Vector{
+    private:
         T* arrayOfElements;
         int size;
         int capacity;
-public:
+    public:
         Vector();
         Vector(int count);
         Vector(int count, const T& value);
@@ -28,12 +29,10 @@ public:
         void reserve(int new_cap);
         void resize(int count);
 
-// Modifiers
         void push_back(const T& value);
         void push_back(T&& value);
         void pop_back();
         void clear() noexcept;
-// Assignment and Swap
         Vector<T>& operator=(const Vector& o);
         Vector<T>& operator=(Vector&& o);
         Vector<T>&operator+=(const T& value);
@@ -43,13 +42,14 @@ public:
 
         Vector<T>& operator--(int);
         Vector<T>& operator++(int);
-};
+    };
 
-class concatenate_error : public invalid_argument {
-public:
-    concatenate_error(const string& message):invalid_argument(message){};
-};
+    class concatenate_error : public invalid_argument {
+    public:
+        concatenate_error(const string& message):invalid_argument(message){};
+    };
 
+}
 
 
 #endif

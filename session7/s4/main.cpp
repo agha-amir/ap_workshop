@@ -2,9 +2,10 @@
 #include "Vector.cpp"
 
 using namespace std;
+using namespace amir;
 
 int main() {
-    Vector<Weapon*> weapons;
+    amir::Vector<Weapon*> weapons;
 
     weapons.push_back(new Blade(10, true, false, "Sword of Destiny", 250, 2));
     weapons.push_back(new Bow(5, "Wind Bow", 150, 1));
